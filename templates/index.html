@@ -15,27 +15,11 @@ function outf(text) {
     var mypre = document.getElementById("output"); 
     mypre.innerHTML = mypre.innerHTML + text; 
 } 
-
-var externalLibs = {
-  "./numpy/__init__.js": "https://cdn.jsdelivr.net/gh/ebertmi/skulpt_numpy@master/numpy/__init__.js"
-};
-
 function builtinRead(x) {
-    console.log("Attempting file: " + Sk.ffi.remapToJs(file));
-  
-   if (externalLibs[file] !== undefined) {
-     return Sk.misceval.promiseToSuspension(
-      fetch(externalLibs[file]).then(
-        function (resp){ return resp.text(); }
-      ));
-   }
-
     if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
             throw "File not found: '" + x + "'";
     return Sk.builtinFiles["files"][x];
 }
-
-
 
 // Here's everything you need to run a python program in skulpt
 // grab the code from your textarea
@@ -43,7 +27,6 @@ function builtinRead(x) {
 // configure the output function
 // call Sk.importMainWithBody()
 function runit() { 
-
    var prog = document.getElementById("yourcode").value; 
    var mypre = document.getElementById("output"); 
    mypre.innerHTML = ''; 
